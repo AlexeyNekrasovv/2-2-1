@@ -10,21 +10,21 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "model")
+    private String model;
 
     @Column(name = "series")
-    private String series;
+    private int series;
 
-    @OneToOne(mappedBy = "car")
-    private User owner;
+    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
+    private User user;
 
     public Car() {
 
     }
 
-    public Car(String name, String series) {
-        this.name = name;
+    public Car(String name, int series) {
+        this.model = name;
         this.series = series;
     }
 
@@ -36,42 +36,37 @@ public class Car {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getModel() {
+        return model;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setModel(String model) {
+        this.model = model;
     }
 
-    public String getSeries() {
+    public int getSeries() {
         return series;
     }
 
-    public void setSeries(String series) {
+    public void setSeries(int series) {
         this.series = series;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
     public String toString() {
-        return name + ' ' + series;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Car car = (Car) o;
-
-        if (name != null ? !name.equals(car.name) : car.name != null) return false;
-        return series != null ? series.equals(car.series) : car.series == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (series != null ? series.hashCode() : 0);
-        return result;
+        return "Car{" +
+                "id=" + id +
+                ", model='" + model + '\'' +
+                ", series=" + series +
+                //", user=" + user +
+                '}';
     }
 }

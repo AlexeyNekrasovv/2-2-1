@@ -1,11 +1,13 @@
 package hiber.dao;
 
 import hiber.model.User;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -25,18 +27,21 @@ public class UserDaoImp implements UserDao {
       TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User");
       return query.getResultList();
    }
-
    @Override
-   public User findOwner(String car_name, String car_series) {
-      // Создаем HQL-запрос для поиска пользователя по модели и серии автомобиля
-      String hql = "SELECT u FROM User u JOIN u.car c WHERE c.name = :car_name AND c.series = :car_series";
-      TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(hql, User.class);
-      query.setParameter("car_name", car_name);
-      query.setParameter("car_series", car_series);
-
-      // Выполняем запрос и получаем результат
-      List<User> users = query.getResultList();
-      return users.isEmpty() ? null : users.get(0);
+   @Transactional
+   public void deleteAllUsers() {
+      Session session = sessionFactory.getCurrentSession();
+      // Здесь HQL запрос по удалению всех пользователей
+      session.createQuery("DELETE FROM User").executeUpdate();
    }
 
+   @Override
+   @Transactional
+   public User findOwner(String model, int series) {
+      Session session = sessionFactory.getCurrentSession();
+      return session.createQuery("FROM User u WHERE u.car.model = :model AND u.car.series = :series", User.class)
+              .setParameter("model", model)
+              .setParameter("series", series)
+              .uniqueResult();
+   }
 }

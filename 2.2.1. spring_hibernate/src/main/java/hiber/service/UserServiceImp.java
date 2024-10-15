@@ -20,10 +20,22 @@ public class UserServiceImp implements UserService {
       userDao.add(user);
    }
 
+   @Transactional
+   @Override
+   public void deleteAllUsers(){
+      userDao.deleteAllUsers();
+   }
+
    @Transactional(readOnly = true)
    @Override
    public List<User> listUsers() {
       return userDao.listUsers();
+   }
+
+   @Transactional
+   @Override
+   public User findOwner(String car_name, int car_series) {
+      return userDao.findOwner(car_name, car_series);
    }
 
 }
