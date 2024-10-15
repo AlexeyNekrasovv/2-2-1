@@ -10,6 +10,5 @@ public interface UserService {
     List<User> listUsers();
     void deleteAllUsers();
 
-    @Transactional
     User findOwner(String car_name, int car_series);
 }

@@ -28,15 +28,12 @@ public class UserDaoImp implements UserDao {
       return query.getResultList();
    }
    @Override
-   @Transactional
    public void deleteAllUsers() {
       Session session = sessionFactory.getCurrentSession();
-      // Здесь HQL запрос по удалению всех пользователей
       session.createQuery("DELETE FROM User").executeUpdate();
    }
 
    @Override
-   @Transactional
    public User findOwner(String model, int series) {
       Session session = sessionFactory.getCurrentSession();
       return session.createQuery("FROM User u WHERE u.car.model = :model AND u.car.series = :series", User.class)
