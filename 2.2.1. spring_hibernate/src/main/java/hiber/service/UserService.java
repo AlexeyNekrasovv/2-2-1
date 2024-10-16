@@ -9,6 +9,7 @@ public interface UserService {
     void add(User user);
     List<User> listUsers();
     void deleteAllUsers();
+    void deleteAllCars();
 
     User findOwner(String car_name, int car_series);
 }

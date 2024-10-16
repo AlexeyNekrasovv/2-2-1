@@ -10,5 +10,6 @@ public interface UserDao {
    User findOwner(String car_name, int car_series);
 
    void deleteAllUsers();
+   void deleteAllCars();
 
 }

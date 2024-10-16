@@ -30,6 +30,12 @@ public class UserServiceImp implements UserService {
       userDao.deleteAllUsers();
    }
 
+   @Transactional
+   @Override
+   public void deleteAllCars(){
+      userDao.deleteAllCars();
+   }
+
    @Transactional(readOnly = true)
    @Override
    public List<User> listUsers() {
@@ -41,5 +47,4 @@ public class UserServiceImp implements UserService {
    public User findOwner(String car_name, int car_series) {
       return userDao.findOwner(car_name, car_series);
    }
-
 }
